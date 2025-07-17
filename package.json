@@ -8,5 +8,20 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shachiru/online-library-system--backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Shachiru/online-library-system--backend/issues"
+  },
+  "homepage": "https://github.com/Shachiru/online-library-system--backend#readme",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.4"
+  }
 }

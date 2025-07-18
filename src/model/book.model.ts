@@ -40,6 +40,11 @@ const BookModel = new mongoose.Schema(
             type: Date,
             default: Date.now,
         },
+        coverImage: {
+            required: false,
+            type: String,
+            default: null,
+        }
     }
 );
 

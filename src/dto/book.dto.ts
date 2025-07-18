@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 export interface BookDTO {
     title: string;
     author: string;
@@ -5,7 +7,8 @@ export interface BookDTO {
     genre: string;
     publicationYear: number;
     availability: boolean;
-    reviews: string[];
+    reviews: Types.ObjectId[];
     averageRating: number;
     createdAt: Date;
+    coverImage?: string | null;
 }

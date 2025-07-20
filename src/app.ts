@@ -1,6 +1,7 @@
 import express, {Express} from "express";
 import cors from "cors";
 import bookRoutes from "./routes/book.routes";
+import authRoutes from "./routes/auth.routes";
 
 const app: Express = express();
 
@@ -22,6 +23,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
+app.use("/api/auth", authRoutes)
 app.use("/api/books", bookRoutes);
 
 export default app;

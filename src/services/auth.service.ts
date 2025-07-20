@@ -2,6 +2,7 @@ import User from "../model/user.model";
 import { UserDTO } from "../dto/user.dto";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import Blacklist from "../model/blacklist.model";
 
 export const registerUser = async (user: UserDTO): Promise<UserDTO> => {
     const hashedPassword = await bcrypt.hash(user.password, 10);
@@ -36,6 +37,33 @@ export const loginUser = async (email: string, password: string): Promise<{ user
     return { user: user.toObject() as UserDTO, accessToken, refreshToken };
 };
 
+export const refreshToken = async (refreshToken: string): Promise<{ accessToken: string; refreshToken: string } | null> => {
+    const blacklisted = await Blacklist.findOne({ token: refreshToken });
+    if (blacklisted) return null;
+
+    try {
+        const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string) as { id: string; roleVerify: string };
+        const user = await User.findById(payload.id);
+        if (!user) return null;
+
+        const accessToken = jwt.sign(
+            { id: user._id, roleVerify: user.role },
+            process.env.JWT_SECRET as string,
+            { expiresIn: "1h" }
+        );
+
+        const newRefreshToken = jwt.sign(
+            { id: user._id, roleVerify: user.role },
+            process.env.REFRESH_TOKEN_SECRET as string,
+            { expiresIn: "7d" }
+        );
+
+        return { accessToken, refreshToken: newRefreshToken };
+    } catch (error) {
+        return null;
+    }
+};
+
 export const getUserById = async (id: string): Promise<UserDTO | null> => {
     const user = await User.findById(id);
     return user ? user.toObject() as UserDTO : null;
@@ -59,4 +87,16 @@ export const validateUser = (user: UserDTO): string | null => {
         return "All required fields must be provided";
     }
     return null;
+};
+
+export const logoutUser = async (refreshToken: string): Promise<boolean> => {
+    try {
+        const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string) as { id: string };
+        const decoded = jwt.decode(refreshToken) as { exp?: number };
+        const expiresAt = decoded.exp ? new Date(decoded.exp * 1000) : new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+        await Blacklist.create({ token: refreshToken, expiresAt });
+        return true;
+    } catch (error) {
+        return false;
+    }
 };

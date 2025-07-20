@@ -72,3 +72,21 @@ export const deleteUser = async (req: Request, res: Response): Promise<void> => 
         res.status(500).json({ message: "Error deleting user", error });
     }
 };
+
+export const logout = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { refreshToken } = req.body;
+        if (!refreshToken) {
+            res.status(400).json({ message: "Refresh token is required" });
+            return;
+        }
+        const success = await authService.logoutUser(refreshToken);
+        if (!success) {
+            res.status(400).json({ message: "Invalid or expired refresh token" });
+            return;
+        }
+        res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        res.status(500).json({ message: "Error logging out", error });
+    }
+};

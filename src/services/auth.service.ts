@@ -23,13 +23,13 @@ export const loginUser = async (email: string, password: string): Promise<{ user
     await User.findOneAndUpdate({ email }, { lastLoginAt: new Date() });
 
     const accessToken = jwt.sign(
-        { id: user._id, roleVerify: user.role },
+        { id: user._id, role: user.role }, // Changed roleVerify to role
         process.env.JWT_SECRET as string,
         { expiresIn: "1h" }
     );
 
     const refreshToken = jwt.sign(
-        { id: user._id, roleVerify: user.role },
+        { id: user._id, role: user.role }, // Changed roleVerify to role
         process.env.REFRESH_TOKEN_SECRET as string,
         { expiresIn: "7d" }
     );
@@ -42,18 +42,18 @@ export const refreshToken = async (refreshToken: string): Promise<{ accessToken:
     if (blacklisted) return null;
 
     try {
-        const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string) as { id: string; roleVerify: string };
+        const payload = jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET as string) as { id: string; role: string }; // Changed roleVerify to role
         const user = await User.findById(payload.id);
         if (!user) return null;
 
         const accessToken = jwt.sign(
-            { id: user._id, roleVerify: user.role },
+            { id: user._id, role: user.role }, // Changed roleVerify to role
             process.env.JWT_SECRET as string,
             { expiresIn: "1h" }
         );
 
         const newRefreshToken = jwt.sign(
-            { id: user._id, roleVerify: user.role },
+            { id: user._id, role: user.role }, // Changed roleVerify to role
             process.env.REFRESH_TOKEN_SECRET as string,
             { expiresIn: "7d" }
         );

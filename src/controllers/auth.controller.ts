@@ -1,107 +1,74 @@
 import { Request, Response } from "express";
-import { authenticateUser, createUser, refreshAccessToken, revokeRefreshToken } from "../services/auth.service";
-import { UserDTO } from "../dto/user.dto";
+import * as authService from "../services/auth.service";
 
-export const register = async (req: Request, res: Response) => {
+export const register = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { name, email, password, role } = req.body;
-
-        if (!name || !email || !password) {
-            return res.status(400).json({
-                success: false,
-                message: "Missing required fields"
-            });
+        const validationError = authService.validateUser(req.body);
+        if (validationError) {
+            res.status(400).json({ message: validationError });
+            return;
         }
-
-        const userDTO: UserDTO = {
-            name,
-            email,
-            password,
-            role: role || "user",
-            createdAt: new Date()
-        };
-
-        const result = await createUser(userDTO);
-
-        // Return the response with status code from the service
-        return res.status(result.status).json(result);
+        const user = await authService.registerUser(req.body);
+        res.status(201).json(user);
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Server error during registration",
-            error: error instanceof Error ? error.message : "Unknown error"
-        });
+        res.status(400).json({ message: "Error registering user", error });
     }
 };
 
-export const login = async (req: Request, res: Response) => {
+export const login = async (req: Request, res: Response): Promise<void> => {
     try {
         const { email, password } = req.body;
-
-        if (!email || !password) {
-            return res.status(400).json({
-                success: false,
-                message: "Email and password are required"
-            });
+        const result = await authService.loginUser(email, password);
+        if (!result) {
+            res.status(401).json({ message: "Invalid credentials" });
+            return;
         }
-
-        const result = await authenticateUser(email, password);
-
-        // Return the response with status code from the service
-        return res.status(result.status).json(result);
+        res.status(200).json({ user: result.user, accessToken: result.accessToken, refreshToken: result.refreshToken });
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Server error during login",
-            error: error instanceof Error ? error.message : "Unknown error"
-        });
+        res.status(500).json({ message: "Error logging in", error });
     }
 };
 
-export const refresh = async (req: Request, res: Response) => {
+export const getUser = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { refreshToken } = req.body;
-
-        if (!refreshToken) {
-            return res.status(400).json({
-                success: false,
-                message: "Refresh token is required"
-            });
+        const user = await authService.getUserById(req.params.id);
+        if (!user) {
+            res.status(404).json({ message: "User not found" });
+            return;
         }
-
-        const result = await refreshAccessToken(refreshToken);
-
-        // Return the response with status code from the service
-        return res.status(result.status).json(result);
+        res.status(200).json(user);
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Server error while refreshing token",
-            error: error instanceof Error ? error.message : "Unknown error"
-        });
+        res.status(500).json({ message: "Error fetching user", error });
     }
 };
 
-export const logout = async (req: Request, res: Response) => {
+export const updateUser = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { refreshToken } = req.body;
-
-        if (!refreshToken) {
-            return res.status(400).json({
-                success: false,
-                message: "Refresh token is required"
-            });
+        const validationError = authService.validateUser(req.body);
+        if (validationError) {
+            res.status(400).json({ message: validationError });
+            return;
         }
-
-        const result = revokeRefreshToken(refreshToken);
-
-        // Return the response with status code from the service
-        return res.status(result.status).json(result);
+        const user = await authService.updateUser(req.params.id, req.body);
+        if (!user) {
+            res.status(404).json({ message: "User not found" });
+            return;
+        }
+        res.status(200).json(user);
     } catch (error) {
-        return res.status(500).json({
-            success: false,
-            message: "Server error during logout",
-            error: error instanceof Error ? error.message : "Unknown error"
-        });
+        res.status(400).json({ message: "Error updating user", error });
+    }
+};
+
+export const deleteUser = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const success = await authService.deleteUser(req.params.id);
+        if (!success) {
+            res.status(404).json({ message: "User not found" });
+            return;
+        }
+        res.status(200).json({ message: "User deleted" });
+    } catch (error) {
+        res.status(500).json({ message: "Error deleting user", error });
     }
 };

@@ -22,10 +22,9 @@ const UserModel = new mongoose.Schema(
             enum: ['user', 'admin'],
             default: 'user',
         },
-        createdAt: {
+        lastLoginAt: {
             type: Date,
-            default: Date.now,
-        },
+        }
     }
 );
 

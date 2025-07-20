@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { login, register, refresh, logout } from "../controllers/auth.controller";
+import { register, login, getUser, updateUser, deleteUser } from "../controllers/auth.controller";
 
-const authRouter: Router = Router();
+const authRoutes: Router = Router();
 
-authRouter.post("/login", login);
-authRouter.post("/register", register);
-authRouter.post("/refresh-token", refresh); // Changed refreshToken to refresh
-authRouter.post("/logout", logout);
+authRoutes.post("/register", register);
+authRoutes.post("/login", login);
+authRoutes.get("/:id", getUser);
+authRoutes.put("/update/:id", updateUser);
+authRoutes.delete("/delete/:id", deleteUser);
 
-export default authRouter;
+export default authRoutes;

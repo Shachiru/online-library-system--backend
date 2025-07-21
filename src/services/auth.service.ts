@@ -23,13 +23,13 @@ export const loginUser = async (email: string, password: string): Promise<{ user
     await User.findOneAndUpdate({ email }, { lastLoginAt: new Date() });
 
     const accessToken = jwt.sign(
-        { id: user._id, role: user.role }, // Changed roleVerify to role
+        { id: user._id, role: user.role },
         process.env.JWT_SECRET as string,
         { expiresIn: "1h" }
     );
 
     const refreshToken = jwt.sign(
-        { id: user._id, role: user.role }, // Changed roleVerify to role
+        { id: user._id, role: user.role },
         process.env.REFRESH_TOKEN_SECRET as string,
         { expiresIn: "7d" }
     );
@@ -47,13 +47,13 @@ export const refreshToken = async (refreshToken: string): Promise<{ accessToken:
         if (!user) return null;
 
         const accessToken = jwt.sign(
-            { id: user._id, role: user.role }, // Changed roleVerify to role
+            { id: user._id, role: user.role },
             process.env.JWT_SECRET as string,
             { expiresIn: "1h" }
         );
 
         const newRefreshToken = jwt.sign(
-            { id: user._id, role: user.role }, // Changed roleVerify to role
+            { id: user._id, role: user.role },
             process.env.REFRESH_TOKEN_SECRET as string,
             { expiresIn: "7d" }
         );

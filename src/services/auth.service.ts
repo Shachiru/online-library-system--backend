@@ -70,10 +70,13 @@ export const getUserById = async (id: string): Promise<UserDTO | null> => {
 };
 
 export const updateUser = async (id: string, data: Partial<UserDTO>): Promise<UserDTO | null> => {
-    if (data.password) {
-        data.password = await bcrypt.hash(data.password, 10);
+    const { role, ...updateData } = data;
+
+    if (updateData.password) {
+        updateData.password = await bcrypt.hash(updateData.password, 10);
     }
-    const user = await User.findByIdAndUpdate(id, data, { new: true });
+
+    const user = await User.findByIdAndUpdate(id, updateData, { new: true });
     return user ? user.toObject() as UserDTO : null;
 };
 

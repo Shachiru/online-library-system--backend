@@ -44,12 +44,17 @@ export const getUser = async (req: Request, res: Response): Promise<void> => {
 
 export const updateUser = async (req: Request, res: Response): Promise<void> => {
     try {
-        const validationError = authService.validateUser(req.body);
+        const { role, ...updateData } = req.body;
+        if (role !== undefined) {
+            res.status(400).json({ message: "Updating the role is not allowed" });
+            return;
+        }
+        const validationError = authService.validateUser(updateData);
         if (validationError) {
             res.status(400).json({ message: validationError });
             return;
         }
-        const user = await authService.updateUser(req.params.id, req.body);
+        const user = await authService.updateUser(req.params.id, updateData);
         if (!user) {
             res.status(404).json({ message: "User not found" });
             return;

@@ -10,7 +10,7 @@ import {
     filterBooksByPublicationYear,
     filterBooksByAuthor,
     filterBooks,
-    filterBooksByAvailability
+    filterBooksByAvailability, filterBooksByRating
 } from '../controllers/book.controller';
 import {authorizeRoles} from "../middleware/auth.middleware";
 
@@ -27,6 +27,8 @@ bookRoutes.get('/filter-author', filterBooksByAuthor);
 bookRoutes.get('/filter', filterBooks);
 
 bookRoutes.get('/filter-availability', filterBooksByAvailability);
+
+bookRoutes.get('/filter-rating', filterBooksByRating);
 
 bookRoutes.get('/all', getAllBooks);
 

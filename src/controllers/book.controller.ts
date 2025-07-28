@@ -161,3 +161,17 @@ export const filterBooksByAvailability = async (req: Request, res: Response): Pr
         res.status(500).json({ message: 'Error filtering books by availability', error });
     }
 };
+
+export const filterBooksByRating = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { minRating } = req.query;
+        if (!minRating || typeof minRating !== 'string' || isNaN(parseFloat(minRating))) {
+            res.status(400).json({ message: 'Valid minRating query parameter is required' });
+            return;
+        }
+        const books = await bookService.filterBooksByRating(parseFloat(minRating));
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).json({ message: 'Error filtering books by rating', error });
+    }
+};

@@ -76,3 +76,7 @@ export const filterBooks = async (filters: {
 export const filterBooksByAvailability = async (availability: boolean): Promise<BookDTO[]> => {
     return Book.find({ availability }).populate('reviews');
 };
+
+export const filterBooksByRating = async (minRating: number): Promise<BookDTO[]> => {
+    return Book.find({ averageRating: { $gte: minRating } }).populate('reviews');
+};

@@ -4,6 +4,9 @@ import bookRoutes from "./routes/book.routes";
 import authRoutes from "./routes/auth.routes";
 import borrowingBookRoutes from "./routes/borrowingList.routes";
 import {authenticateToken} from "./middleware/auth.middleware";
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app: Express = express();
 

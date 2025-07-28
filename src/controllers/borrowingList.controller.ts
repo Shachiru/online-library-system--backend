@@ -9,6 +9,8 @@ import {
 import {BorrowingListDTO} from "../dto/borrowingList.dto";
 import {Types} from "mongoose";
 import Book from "../model/book.model";
+import {sendEmail} from "../services/email.service";
+import User from "../model/user.model";
 
 type AuthRequest = Request & { user?: { id: string; role: string } };
 
@@ -35,37 +37,44 @@ export const getBorrowingList = async (req: AuthRequest, res: Response) => {
 export const addToBorrowingList = async (req: AuthRequest, res: Response) => {
     try {
         if (!req.user) {
-            return res.status(401).json({message: "User not authenticated"});
+            return res.status(401).json({ message: "User not authenticated" });
         }
         const userId = req.user.id;
-        const {isbn} = req.body;
+        const { isbn } = req.body;
         if (!isbn) {
-            return res.status(400).json({message: "ISBN is required"});
+            return res.status(400).json({ message: "ISBN is required" });
         }
-        // Fetch book to get ObjectId
-        const book = await Book.findOne({isbn});
+        const book = await Book.findOne({ isbn });
         if (!book) {
-            return res.status(404).json({message: "Book not found"});
+            return res.status(404).json({ message: "Book not found" });
         }
-        // Create BorrowingListDTO with ObjectId
         const listDTO: BorrowingListDTO = {
             userId: new Types.ObjectId(userId),
             books: [book._id],
             createdAt: new Date(),
-            updatedAt: new Date()
+            updatedAt: new Date(),
         };
         const validationError = validateBorrowingList(listDTO);
         if (validationError) {
-            return res.status(400).json({message: validationError});
+            return res.status(400).json({ message: validationError });
         }
         const list = await addBookToBorrowingList(userId, isbn);
         if (!list) {
-            return res.status(404).json({message: "Book or borrowing list not found"});
+            return res.status(404).json({ message: "Book or borrowing list not found" });
+        }
+        // Send email notification
+        const user = await User.findById(userId);
+        if (user) {
+            await sendEmail(
+                user.email,
+                "Book Added to Your Borrowing List",
+                `Hi ${user.name},\n\nYou’ve added "${book.title}" by ${book.author} to your borrowing list. Enjoy your reading!\n\nBest,\nThe Library Team`
+            );
         }
         res.json(list);
     } catch (error) {
         console.error("Error in addToBorrowingList:", error);
-        res.status(500).json({message: "Internal server error"});
+        res.status(500).json({ message: "Internal server error" });
     }
 };
 

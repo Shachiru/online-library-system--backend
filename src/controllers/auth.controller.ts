@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import * as authService from "../services/auth.service";
+import {sendEmail} from "../services/email.service";
 
 export const register = async (req: Request, res: Response): Promise<void> => {
     try {
@@ -9,6 +10,11 @@ export const register = async (req: Request, res: Response): Promise<void> => {
             return;
         }
         const user = await authService.registerUser(req.body);
+        await sendEmail(
+            user.email,
+            "Welcome to Online Library System",
+            `Hello ${user.name},\n\nWelcome to our Online Library System! We're excited to have you on board. Start exploring our collection today.\n\nBest regards,\nThe Library Team`
+        );
         res.status(201).json(user);
     } catch (error) {
         res.status(400).json({ message: "Error registering user", error });

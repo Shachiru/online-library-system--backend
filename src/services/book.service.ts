@@ -1,5 +1,6 @@
 import Book from "../model/book.model";
 import {BookDTO} from "../dto/book.dto";
+import {sendEmail} from "./email.service";
 
 export const getAllBooks = async (): Promise<BookDTO[]> => {
     return Book.find().populate('reviews');
@@ -14,9 +15,10 @@ export const getBookById = async (isbn: string): Promise<BookDTO | null> => {
 };
 
 export const updateBook = async (isbn: string, data: Partial<BookDTO>): Promise<BookDTO | null> => {
-    const book = await Book.findOneAndUpdate({isbn}, data, {new: true});
-    if (!book) {
-        return null;
+    const book = await Book.findOneAndUpdate({ isbn }, data, { new: true });
+    if (!book) return null;
+    if (data.availability && book.availability) {
+        await sendEmail("user@example.com", "Book Available", `${book.title} is now available!`);
     }
     return book;
 };

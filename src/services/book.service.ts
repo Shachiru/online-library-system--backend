@@ -38,3 +38,9 @@ export const searchBooksByTitle = async (title: string): Promise<BookDTO[]> => {
         title: { $eq: title }
     }).collation({ locale: 'en', strength: 2 }).populate('reviews');
 };
+
+export const searchBooksByGenre = async (genre: string): Promise<BookDTO[]> => {
+    return Book.find({
+        genre: { $eq: genre }
+    }).collation({ locale: 'en', strength: 2 }).populate('reviews');
+};

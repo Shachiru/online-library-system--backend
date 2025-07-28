@@ -81,3 +81,17 @@ export const searchBooksByTitle = async (req: Request, res: Response): Promise<v
         res.status(500).json({ message: 'Error searching books', error });
     }
 };
+
+export const searchBooksByGenre = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { genre } = req.query;
+        if (!genre || typeof genre !== 'string') {
+            res.status(400).json({ message: 'Genre query parameter is required' });
+            return;
+        }
+        const books = await bookService.searchBooksByGenre(genre);
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).json({ message: 'Error searching books by genre', error });
+    }
+};

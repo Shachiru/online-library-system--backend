@@ -5,13 +5,15 @@ import {
     getBookById,
     updateBook,
     deleteBook,
-    searchBooksByTitle
+    searchBooksByTitle, searchBooksByGenre
 } from '../controllers/book.controller';
 import {authorizeRoles} from "../middleware/auth.middleware";
 
 const bookRoutes: Router = Router();
 
 bookRoutes.get('/search', searchBooksByTitle);
+
+bookRoutes.get('/search-genre', searchBooksByGenre);
 
 bookRoutes.get('/all', getAllBooks);
 

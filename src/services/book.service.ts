@@ -44,3 +44,9 @@ export const searchBooksByGenre = async (genre: string): Promise<BookDTO[]> => {
         genre: { $eq: genre }
     }).collation({ locale: 'en', strength: 2 }).populate('reviews');
 };
+
+export const filterBooksByPublicationYear = async (year: number): Promise<BookDTO[]> => {
+    return Book.find({
+        publicationYear: { $eq: year }
+    }).populate('reviews');
+};

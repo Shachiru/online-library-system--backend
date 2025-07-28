@@ -95,3 +95,17 @@ export const searchBooksByGenre = async (req: Request, res: Response): Promise<v
         res.status(500).json({ message: 'Error searching books by genre', error });
     }
 };
+
+export const filterBooksByPublicationYear = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { year } = req.query;
+        if (!year || typeof year !== 'string' || isNaN(parseInt(year))) {
+            res.status(400).json({ message: 'Valid year query parameter is required' });
+            return;
+        }
+        const books = await bookService.filterBooksByPublicationYear(parseInt(year));
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).json({ message: 'Error filtering books by publication year', error });
+    }
+};

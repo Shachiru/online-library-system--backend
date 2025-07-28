@@ -123,3 +123,27 @@ export const filterBooksByAuthor = async (req: Request, res: Response): Promise<
         res.status(500).json({ message: 'Error filtering books by author', error });
     }
 };
+
+export const filterBooks = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { title, genre, year, author } = req.query;
+        if (!title && !genre && !year && !author) {
+            res.status(400).json({ message: 'At least one filter parameter is required' });
+            return;
+        }
+        const filters: {
+            title?: string;
+            genre?: string;
+            publicationYear?: number;
+            author?: string;
+        } = {};
+        if (title && typeof title === 'string') filters.title = title;
+        if (genre && typeof genre === 'string') filters.genre = genre;
+        if (year && typeof year === 'string' && !isNaN(parseInt(year))) filters.publicationYear = parseInt(year);
+        if (author && typeof author === 'string') filters.author = author;
+        const books = await bookService.filterBooks(filters);
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).json({ message: 'Error filtering books', error });
+    }
+};

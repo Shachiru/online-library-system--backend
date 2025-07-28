@@ -56,3 +56,19 @@ export const filterBooksByAuthor = async (author: string): Promise<BookDTO[]> =>
         author: { $eq: author }
     }).collation({ locale: 'en', strength: 2 }).populate('reviews');
 };
+
+export const filterBooks = async (filters: {
+    title?: string;
+    genre?: string;
+    publicationYear?: number;
+    author?: string;
+}): Promise<BookDTO[]> => {
+    const query: any = {};
+    if (filters.title) query.title = { $eq: filters.title };
+    if (filters.genre) query.genre = { $eq: filters.genre };
+    if (filters.publicationYear) query.publicationYear = { $eq: filters.publicationYear };
+    if (filters.author) query.author = { $eq: filters.author };
+    return Book.find(query)
+        .collation({ locale: 'en', strength: 2 })
+        .populate('reviews');
+};

@@ -35,14 +35,14 @@ export const validateBook = (book: BookDTO): string | null => {
 
 export const searchBooksByTitle = async (title: string): Promise<BookDTO[]> => {
     return Book.find({
-        title: { $eq: title }
-    }).collation({ locale: 'en', strength: 2 }).populate('reviews');
+        title: { $regex: title, $options: 'i' }
+    }).populate('reviews');
 };
 
 export const searchBooksByGenre = async (genre: string): Promise<BookDTO[]> => {
     return Book.find({
-        genre: { $eq: genre }
-    }).collation({ locale: 'en', strength: 2 }).populate('reviews');
+        genre: { $regex: genre, $options: 'i' }
+    }).populate('reviews');
 };
 
 export const filterBooksByPublicationYear = async (year: number): Promise<BookDTO[]> => {
@@ -53,8 +53,8 @@ export const filterBooksByPublicationYear = async (year: number): Promise<BookDT
 
 export const filterBooksByAuthor = async (author: string): Promise<BookDTO[]> => {
     return Book.find({
-        author: { $eq: author }
-    }).collation({ locale: 'en', strength: 2 }).populate('reviews');
+        author: { $regex: author, $options: 'i' }
+    }).populate('reviews');
 };
 
 export const filterBooks = async (filters: {

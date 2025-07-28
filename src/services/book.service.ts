@@ -72,3 +72,7 @@ export const filterBooks = async (filters: {
         .collation({ locale: 'en', strength: 2 })
         .populate('reviews');
 };
+
+export const filterBooksByAvailability = async (availability: boolean): Promise<BookDTO[]> => {
+    return Book.find({ availability }).populate('reviews');
+};

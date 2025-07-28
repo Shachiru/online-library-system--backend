@@ -5,7 +5,12 @@ import {
     getBookById,
     updateBook,
     deleteBook,
-    searchBooksByTitle, searchBooksByGenre, filterBooksByPublicationYear, filterBooksByAuthor, filterBooks
+    searchBooksByTitle,
+    searchBooksByGenre,
+    filterBooksByPublicationYear,
+    filterBooksByAuthor,
+    filterBooks,
+    filterBooksByAvailability
 } from '../controllers/book.controller';
 import {authorizeRoles} from "../middleware/auth.middleware";
 
@@ -20,6 +25,8 @@ bookRoutes.get('/filter-year', filterBooksByPublicationYear);
 bookRoutes.get('/filter-author', filterBooksByAuthor);
 
 bookRoutes.get('/filter', filterBooks);
+
+bookRoutes.get('/filter-availability', filterBooksByAvailability);
 
 bookRoutes.get('/all', getAllBooks);
 

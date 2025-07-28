@@ -147,3 +147,17 @@ export const filterBooks = async (req: Request, res: Response): Promise<void> =>
         res.status(500).json({ message: 'Error filtering books', error });
     }
 };
+
+export const filterBooksByAvailability = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { availability } = req.query;
+        if (availability !== 'true' && availability !== 'false') {
+            res.status(400).json({ message: 'Valid availability query parameter (true/false) is required' });
+            return;
+        }
+        const books = await bookService.filterBooksByAvailability(availability === 'true');
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).json({ message: 'Error filtering books by availability', error });
+    }
+};

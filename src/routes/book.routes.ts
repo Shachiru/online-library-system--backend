@@ -1,8 +1,17 @@
 import {Router} from 'express';
-import {getAllBooks, saveBook, getBookById, updateBook, deleteBook} from '../controllers/book.controller';
+import {
+    getAllBooks,
+    saveBook,
+    getBookById,
+    updateBook,
+    deleteBook,
+    searchBooksByTitle
+} from '../controllers/book.controller';
 import {authorizeRoles} from "../middleware/auth.middleware";
 
 const bookRoutes: Router = Router();
+
+bookRoutes.get('/search', searchBooksByTitle);
 
 bookRoutes.get('/all', getAllBooks);
 

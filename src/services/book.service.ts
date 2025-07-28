@@ -10,11 +10,11 @@ export const saveBook = async (book: BookDTO): Promise<BookDTO> => {
 };
 
 export const getBookById = async (isbn: string): Promise<BookDTO | null> => {
-    return Book.findOne({ isbn }).populate('reviews');
+    return Book.findOne({isbn}).populate('reviews');
 };
 
 export const updateBook = async (isbn: string, data: Partial<BookDTO>): Promise<BookDTO | null> => {
-    const book = await Book.findOneAndUpdate({ isbn }, data, { new: true });
+    const book = await Book.findOneAndUpdate({isbn}, data, {new: true});
     if (!book) {
         return null;
     }
@@ -22,7 +22,7 @@ export const updateBook = async (isbn: string, data: Partial<BookDTO>): Promise<
 };
 
 export const deleteBook = async (isbn: string): Promise<boolean> => {
-    await Book.deleteOne({ isbn });
+    await Book.deleteOne({isbn});
     return true;
 };
 
@@ -31,4 +31,10 @@ export const validateBook = (book: BookDTO): string | null => {
         return 'All required fields must be provided';
     }
     return null;
+};
+
+export const searchBooksByTitle = async (title: string): Promise<BookDTO[]> => {
+    return Book.find({
+        title: { $eq: title }
+    }).collation({ locale: 'en', strength: 2 }).populate('reviews');
 };

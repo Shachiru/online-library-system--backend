@@ -109,3 +109,17 @@ export const filterBooksByPublicationYear = async (req: Request, res: Response):
         res.status(500).json({ message: 'Error filtering books by publication year', error });
     }
 };
+
+export const filterBooksByAuthor = async (req: Request, res: Response): Promise<void> => {
+    try {
+        const { author } = req.query;
+        if (!author || typeof author !== 'string') {
+            res.status(400).json({ message: 'Author query parameter is required' });
+            return;
+        }
+        const books = await bookService.filterBooksByAuthor(author);
+        res.status(200).json(books);
+    } catch (error) {
+        res.status(500).json({ message: 'Error filtering books by author', error });
+    }
+};

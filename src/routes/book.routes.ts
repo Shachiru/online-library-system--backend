@@ -5,7 +5,7 @@ import {
     getBookById,
     updateBook,
     deleteBook,
-    searchBooksByTitle, searchBooksByGenre, filterBooksByPublicationYear
+    searchBooksByTitle, searchBooksByGenre, filterBooksByPublicationYear, filterBooksByAuthor
 } from '../controllers/book.controller';
 import {authorizeRoles} from "../middleware/auth.middleware";
 
@@ -16,6 +16,8 @@ bookRoutes.get('/search', searchBooksByTitle);
 bookRoutes.get('/search-genre', searchBooksByGenre);
 
 bookRoutes.get('/filter-year', filterBooksByPublicationYear);
+
+bookRoutes.get('/filter-author', filterBooksByAuthor);
 
 bookRoutes.get('/all', getAllBooks);
 

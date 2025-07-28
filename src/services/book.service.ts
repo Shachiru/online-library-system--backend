@@ -50,3 +50,9 @@ export const filterBooksByPublicationYear = async (year: number): Promise<BookDT
         publicationYear: { $eq: year }
     }).populate('reviews');
 };
+
+export const filterBooksByAuthor = async (author: string): Promise<BookDTO[]> => {
+    return Book.find({
+        author: { $eq: author }
+    }).collation({ locale: 'en', strength: 2 }).populate('reviews');
+};

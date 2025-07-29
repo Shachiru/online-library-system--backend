@@ -11,7 +11,7 @@ authRoutes.get("/:id", getUser);
 
 authRoutes.put("/update/:id", updateUser);
 
-authRoutes.delete("//delete/:id", deleteUser);
+authRoutes.delete("/delete/:id", deleteUser);
 
 authRoutes.post("/logout", logout);
 

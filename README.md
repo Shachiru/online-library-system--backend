@@ -63,6 +63,7 @@ A robust backend API for an Online Library System, built with TypeScript, Expres
 3. **Configure environment variables:**
    - Copy `.env.example` to `.env` and update values as needed:
      ```
+     PORT=port_number(default-3000)
      MONGODB_URI=your_mongodb_connection_string
      JWT_SECRET=your_jwt_secret
      EMAIL_USER=your_email_address

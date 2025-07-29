@@ -1,15 +1,17 @@
 import {Router} from "express";
-import * as borrowingListController from "../controllers/borrowingList.controller";
-import { authenticateToken } from "../middleware/auth.middleware";
+import {
+    getBorrowingList,
+    addToBorrowingList,
+    removeFromBorrowingList,
+    clearBorrowingList,
+} from "../controllers/borrowingList.controller";
+import {authenticateToken} from "../middleware/auth.middleware";
 
-const borrowingBookRoutes: Router = Router();
+const router = Router();
 
-borrowingBookRoutes.get("/", authenticateToken, borrowingListController.getBorrowingList);
+router.get("/", authenticateToken, getBorrowingList);
+router.post("/add", authenticateToken, addToBorrowingList);
+router.delete("/remove/:isbn", authenticateToken, removeFromBorrowingList);
+router.delete("/clear", authenticateToken, clearBorrowingList);
 
-borrowingBookRoutes.post("/add", authenticateToken, borrowingListController.addToBorrowingList);
-
-borrowingBookRoutes.delete("/remove/:isbn", authenticateToken, borrowingListController.removeFromBorrowingList);
-
-borrowingBookRoutes.delete("/clear", authenticateToken, borrowingListController.clearBorrowingList);
-
-export default borrowingBookRoutes;
+export default router;

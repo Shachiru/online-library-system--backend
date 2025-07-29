@@ -1,69 +1,71 @@
-import mongoose from "mongoose";
+import {Types} from "mongoose";
 import BorrowingList from "../model/borrowingList.model";
 import Book from "../model/book.model";
 import {BorrowingListDTO} from "../dto/borrowingList.dto";
 
-export const getBorrowingListByUserId = async (userId: string): Promise<BorrowingListDTO | null> => {
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
+export const getBorrowingListByUserId = async (userId: string) => {
+    console.log(`Fetching borrowing list for userId: ${userId}`);
+    const list = await BorrowingList.findOne({userId}).populate('books');
+    if (!list || list.books.length === 0) {
+        console.log(`No borrowing list found or list is empty for userId: ${userId}`);
         return null;
     }
-    return BorrowingList.findOne({userId}).populate('books');
+    return list;
 };
 
-export const addBookToBorrowingList = async (userId: string, isbn: string): Promise<BorrowingListDTO | null> => {
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-        return null;
-    }
+export const addBookToBorrowingList = async (userId: string, isbn: string) => {
     const book = await Book.findOne({isbn});
     if (!book) {
+        console.log(`Book with ISBN ${isbn} not found`);
         return null;
     }
+    console.log(`Adding book ${book.title} (ISBN: ${isbn}, Availability: ${book.availability}) to borrowing list for userId: ${userId}`);
     let list = await BorrowingList.findOne({userId});
     if (!list) {
-        list = new BorrowingList({userId, books: [book._id]});
-    } else {
-        if (!list.books.some(id => id.toString() === book._id.toString())) {
-            list.books.push(book._id);
-        }
+        list = new BorrowingList({userId, books: []});
     }
-    list.updatedAt = new Date();
-    return list.save();
+    if (!list.books.includes(book._id)) {
+        list.books.push(book._id);
+        await list.save();
+    }
+    return list.populate('books');
 };
 
-export const removeBookFromBorrowingList = async (userId: string, isbn: string): Promise<BorrowingListDTO | null> => {
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
-        return null;
-    }
+export const removeBookFromBorrowingList = async (userId: string, isbn: string) => {
     const book = await Book.findOne({isbn});
     if (!book) {
+        console.log(`Book with ISBN ${isbn} not found`);
         return null;
     }
+    console.log(`Removing book ${book.title} (ISBN: ${isbn}) from borrowing list for userId: ${userId}`);
     const list = await BorrowingList.findOne({userId});
-    if (list) {
-        list.books = list.books.filter(id => id.toString() !== book._id.toString());
-        list.updatedAt = new Date();
-        return list.save();
+    if (!list) {
+        console.log(`Borrowing list not found for userId: ${userId}`);
+        return null;
     }
-    return null;
+    list.books = list.books.filter((bookId) => bookId.toString() !== book._id.toString());
+    await list.save();
+    return list.populate('books');
 };
 
-export const clearBorrowingList = async (userId: string): Promise<boolean> => {
-    if (!mongoose.Types.ObjectId.isValid(userId)) {
+export const clearBorrowingListService = async (userId: string) => {
+    console.log(`Clearing borrowing list for userId: ${userId}`);
+    const list = await BorrowingList.findOne({userId});
+    if (!list) {
+        console.log(`Borrowing list not found for userId: ${userId}`);
         return false;
     }
-    const list = await BorrowingList.findOne({userId});
-    if (list) {
-        list.books = [];
-        list.updatedAt = new Date();
-        await list.save();
-        return true;
-    }
-    return false;
+    list.books = [];
+    await list.save();
+    return true;
 };
 
-export const validateBorrowingList = (list: BorrowingListDTO): string | null => {
-    if (!list.userId || !list.books) {
-        return 'User ID and books are required';
+export const validateBorrowingList = (listDTO: BorrowingListDTO): string | null => {
+    if (!Types.ObjectId.isValid(listDTO.userId)) {
+        return "Invalid user ID format";
+    }
+    if (!listDTO.books.every((bookId) => Types.ObjectId.isValid(bookId))) {
+        return "Invalid book ID format";
     }
     return null;
 };

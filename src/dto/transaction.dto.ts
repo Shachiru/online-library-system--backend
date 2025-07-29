@@ -1,9 +1,10 @@
+import { Types } from 'mongoose';
+
 export interface TransactionDTO {
-    userId: string;
-    bookId: string;
+    userId: Types.ObjectId;
+    bookId: Types.ObjectId;
     borrowDate: Date;
-    returnDate?: Date;
     dueDate: Date;
-    status: 'borrowed' | 'returned' | 'overdue';
-    createdAt: Date;
+    returnDate?: Date | null;
+    status: 'borrowed' | 'returned';
 }

@@ -11,16 +11,16 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     const token = authHeader && authHeader.split(' ')[1];
     console.log('Token:', token); // Log the token
     if (!token) {
-        res.status(401).json({ error: 'Auth token is not present in request headers!' });
+        res.status(401).json({error: 'Auth token is not present in request headers!'});
         return;
     }
     jwt.verify(token, JWT_SECRET, (error, user) => {
         if (error) {
-            console.log('JWT Error:', error); // Log the error
-            res.status(403).json({ error: 'Invalid or expired token!' });
+            console.log('JWT Error:', error);
+            res.status(403).json({error: 'Invalid or expired token!'});
             return;
         }
-        console.log('Decoded User:', user); // Log the decoded user
+        console.log('Decoded User:', user);
         (req as Request & { user?: any }).user = user;
         next();
     });
@@ -29,7 +29,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
 export const authorizeRoles = (...roles: string[]) => {
     return (req: Request, res: Response, next: NextFunction) => {
         const user = (req as Request & { user?: any }).user;
-        console.log('User Role:', user?.role); // Log the user role
+        console.log('User Role:', user?.role);
         if (!user || !roles.includes(user.role)) {
             res.status(403).json({
                 error: 'Access denied! User does not have permission to perform this operation.'

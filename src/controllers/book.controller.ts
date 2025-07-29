@@ -1,12 +1,15 @@
 import {Request, Response} from 'express';
 import * as bookService from '../services/book.service';
+import Book from "../model/book.model";
 
-export const getAllBooks = async (req: Request, res: Response): Promise<void> => {
+export const getAllBooks = async (req: Request, res: Response) => {
     try {
-        const books = await bookService.getAllBooks();
+        const books = await Book.find({}).select('-__v');
+        console.log(`Fetched ${books.length} books, Available: ${books.filter(b => b.availability).length}`);
         res.status(200).json(books);
     } catch (error) {
-        res.status(500).json({message: 'Error fetching books', error});
+        console.error('Error in getAllBooks:', error);
+        res.status(500).json({error: 'Internal server error'});
     }
 };
 
@@ -70,65 +73,65 @@ export const deleteBook = async (req: Request, res: Response): Promise<void> => 
 
 export const searchBooksByTitle = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { title } = req.query;
+        const {title} = req.query;
         if (!title || typeof title !== 'string') {
-            res.status(400).json({ message: 'Title query parameter is required' });
+            res.status(400).json({message: 'Title query parameter is required'});
             return;
         }
         const books = await bookService.searchBooksByTitle(title);
         res.status(200).json(books); // Return books or empty array
     } catch (error) {
-        res.status(500).json({ message: 'Error searching books', error });
+        res.status(500).json({message: 'Error searching books', error});
     }
 };
 
 export const searchBooksByGenre = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { genre } = req.query;
+        const {genre} = req.query;
         if (!genre || typeof genre !== 'string') {
-            res.status(400).json({ message: 'Genre query parameter is required' });
+            res.status(400).json({message: 'Genre query parameter is required'});
             return;
         }
         const books = await bookService.searchBooksByGenre(genre);
         res.status(200).json(books);
     } catch (error) {
-        res.status(500).json({ message: 'Error searching books by genre', error });
+        res.status(500).json({message: 'Error searching books by genre', error});
     }
 };
 
 export const filterBooksByPublicationYear = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { year } = req.query;
+        const {year} = req.query;
         if (!year || typeof year !== 'string' || isNaN(parseInt(year))) {
-            res.status(400).json({ message: 'Valid year query parameter is required' });
+            res.status(400).json({message: 'Valid year query parameter is required'});
             return;
         }
         const books = await bookService.filterBooksByPublicationYear(parseInt(year));
         res.status(200).json(books);
     } catch (error) {
-        res.status(500).json({ message: 'Error filtering books by publication year', error });
+        res.status(500).json({message: 'Error filtering books by publication year', error});
     }
 };
 
 export const filterBooksByAuthor = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { author } = req.query;
+        const {author} = req.query;
         if (!author || typeof author !== 'string') {
-            res.status(400).json({ message: 'Author query parameter is required' });
+            res.status(400).json({message: 'Author query parameter is required'});
             return;
         }
         const books = await bookService.filterBooksByAuthor(author);
         res.status(200).json(books);
     } catch (error) {
-        res.status(500).json({ message: 'Error filtering books by author', error });
+        res.status(500).json({message: 'Error filtering books by author', error});
     }
 };
 
 export const filterBooks = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { title, genre, year, author } = req.query;
+        const {title, genre, year, author} = req.query;
         if (!title && !genre && !year && !author) {
-            res.status(400).json({ message: 'At least one filter parameter is required' });
+            res.status(400).json({message: 'At least one filter parameter is required'});
             return;
         }
         const filters: {
@@ -144,34 +147,34 @@ export const filterBooks = async (req: Request, res: Response): Promise<void> =>
         const books = await bookService.filterBooks(filters);
         res.status(200).json(books);
     } catch (error) {
-        res.status(500).json({ message: 'Error filtering books', error });
+        res.status(500).json({message: 'Error filtering books', error});
     }
 };
 
 export const filterBooksByAvailability = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { availability } = req.query;
+        const {availability} = req.query;
         if (availability !== 'true' && availability !== 'false') {
-            res.status(400).json({ message: 'Valid availability query parameter (true/false) is required' });
+            res.status(400).json({message: 'Valid availability query parameter (true/false) is required'});
             return;
         }
         const books = await bookService.filterBooksByAvailability(availability === 'true');
         res.status(200).json(books);
     } catch (error) {
-        res.status(500).json({ message: 'Error filtering books by availability', error });
+        res.status(500).json({message: 'Error filtering books by availability', error});
     }
 };
 
 export const filterBooksByRating = async (req: Request, res: Response): Promise<void> => {
     try {
-        const { minRating } = req.query;
+        const {minRating} = req.query;
         if (!minRating || typeof minRating !== 'string' || isNaN(parseFloat(minRating))) {
-            res.status(400).json({ message: 'Valid minRating query parameter is required' });
+            res.status(400).json({message: 'Valid minRating query parameter is required'});
             return;
         }
         const books = await bookService.filterBooksByRating(parseFloat(minRating));
         res.status(200).json(books);
     } catch (error) {
-        res.status(500).json({ message: 'Error filtering books by rating', error });
+        res.status(500).json({message: 'Error filtering books by rating', error});
     }
 };

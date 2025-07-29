@@ -1,0 +1,878 @@
+{
+	"info": {
+		"_postman_id": "a4265b9b-07c3-4ac7-9c6a-0add499996e1",
+		"name": "Online-Library-System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "37710211"
+	},
+	"item": [
+		{
+			"name": "Books",
+			"item": [
+				{
+					"name": "SaveBooks",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODQ1YzY1OGFhM2QyMjNhNzE2Y2I3NyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1Mzc3MDY0NiwiZXhwIjoxNzUzNzc0MjQ2fQ.1MZ8bz3Cdq6j967nGrZ-hWLqXuqJYc6EJyfViBf4uW4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"The Great Gatsby\",\r\n    \"author\": \"F. Scott Fitzgerald\",\r\n    \"isbn\": \"978-0-7432-7356-5\",\r\n    \"genre\": \"Classic\",\r\n    \"publicationYear\": 1925,\r\n    \"availability\": true,\r\n    \"reviews\": [],\r\n    \"averageRating\": 0,\r\n    \"createdAt\": \"2025-07-18T10:00:00.000Z\",\r\n    \"coverImage\": \"https://img.freepik.com/free-vector/professional-business-book-cover_23-2149490317.jpg?t=st=1753611286~exp=1753614886~hmac=0a1785b493e74c4f37941b9f0745ab74f5b36b7074cb07d10aca9e84ec88cce7&w=1380\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/books/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SaveBooks Copy",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODQ1YzY1OGFhM2QyMjNhNzE2Y2I3NyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1Mzc3MDY0NiwiZXhwIjoxNzUzNzc0MjQ2fQ.1MZ8bz3Cdq6j967nGrZ-hWLqXuqJYc6EJyfViBf4uW4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"title\": \"Sherlock Holmes\",\r\n    \"author\": \"James\",\r\n    \"isbn\": \"978-0-7432-8976-8\",\r\n    \"genre\": \"Novel\",\r\n    \"publicationYear\": 2001,\r\n    \"availability\": true,\r\n    \"reviews\": [],\r\n    \"averageRating\": 0,\r\n    \"createdAt\": \"2025-07-22T10:13:00.000Z\",\r\n    \"coverImage\": \"https://i.pinimg.com/736x/ce/12/de/ce12de3de0e7c0f0e8100924fbdc8c3e.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/books/save",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"save"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetAllBooks",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODg1YWVlMTZlYTQ3NGMzNGM2NDE3NyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzUzNzcwNTk4LCJleHAiOjE3NTM3NzQxOTh9.eXCvfCV5sjaCrp5zk2ThhxrpWbzgkmUElbCn399MbWY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/books/all",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetBookById",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4N2QzMmM2YjMwOTk4ZjBlMTY0NzVlNCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MzAzNTQ2OSwiZXhwIjoxNzUzMDM5MDY5fQ.Ydugnu_WUgCbTb8uS89HAxpRceeZuc9JqwohFHjYUpg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/books/978-0-7432-7356-5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"978-0-7432-7356-5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateBook",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4N2QzMmM2YjMwOTk4ZjBlMTY0NzVlNCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MzAzNTQ2OSwiZXhwIjoxNzUzMDM5MDY5fQ.Ydugnu_WUgCbTb8uS89HAxpRceeZuc9JqwohFHjYUpg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"title\": \"The Great Gatsby\",\r\n  \"author\": \"F. Scott Fitzgerald\",\r\n  \"isbn\": \"978-0-7432-7356-5\",\r\n  \"genre\": \"Classic\",\r\n  \"publicationYear\": 1925,\r\n  \"availability\": false,\r\n  \"reviews\": [],\r\n  \"averageRating\": 4.5,\r\n  \"createdAt\": \"2025-07-18T10:00:00.000Z\",\r\n  \"coverImage\": \"http://example.com/gatsby_updated.jpg\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/books/update/978-0-7432-7356-5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"update",
+								"978-0-7432-7356-5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteBook",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4N2QzMmM2YjMwOTk4ZjBlMTY0NzVlNCIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MzAzNTQ2OSwiZXhwIjoxNzUzMDM5MDY5fQ.Ydugnu_WUgCbTb8uS89HAxpRceeZuc9JqwohFHjYUpg",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/books/delete/978-0-7432-7356-5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"delete",
+								"978-0-7432-7356-5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SearchBooksbyTitle",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODQ1YzY1OGFhM2QyMjNhNzE2Y2I3NyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MzY4MTkxOSwiZXhwIjoxNzUzNjg1NTE5fQ.1X4DsNmRv2IDkQTJrNRedYTXkxnVz4ktwm77iYbpwPQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/books/search?title=great",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"search"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "great"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search by Genre",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODQ1YzY1OGFhM2QyMjNhNzE2Y2I3NyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MzY4MzkyNywiZXhwIjoxNzUzNjg3NTI3fQ.jwjns7wDk7cA50nGBwECfsRorGmsjXcCIx1RX53fq-Y",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/books/search-genre?genre=Classic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"search-genre"
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "Classic"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Publication Year",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODQ1YzY1OGFhM2QyMjNhNzE2Y2I3NyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MzY4NDM0NiwiZXhwIjoxNzUzNjg3OTQ2fQ.VuA1GozGEeDgbjoOINQrC4K21e4_Fdn9DrPTsH0b4Rw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/books/filter-year?year=1925",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"filter-year"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "1925"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Author",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODQ1YzY1OGFhM2QyMjNhNzE2Y2I3NyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MzY4NDM0NiwiZXhwIjoxNzUzNjg3OTQ2fQ.VuA1GozGEeDgbjoOINQrC4K21e4_Fdn9DrPTsH0b4Rw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/books/filter-author?author=Fitzgerald",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"filter-author"
+							],
+							"query": [
+								{
+									"key": "author",
+									"value": "Fitzgerald"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Books",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODQ1YzY1OGFhM2QyMjNhNzE2Y2I3NyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MzY4NDM0NiwiZXhwIjoxNzUzNjg3OTQ2fQ.VuA1GozGEeDgbjoOINQrC4K21e4_Fdn9DrPTsH0b4Rw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/books/filter?genre=Classic",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "genre",
+									"value": "Classic"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter by Availability",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODc2YTY0YTcxNTE1NjYzYzcwZjMyZCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzUzNzYzNDY2LCJleHAiOjE3NTM3NjcwNjZ9.fFyRMB9hnxwsWg5CoDmOPTLfTs9pEljWTFHS-pjdmME",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/books/filter-availability?availability=true",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"filter-availability"
+							],
+							"query": [
+								{
+									"key": "availability",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Filter By Rating",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODQ1YzY1OGFhM2QyMjNhNzE2Y2I3NyIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc1MzY4NjQzOCwiZXhwIjoxNzUzNjkwMDM4fQ.6GGO80hdDqKv5eB_TJOUHg03Je3BtCSEhUis8DxxPDk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/books/filter-rating?minRating=4.0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"books",
+								"filter-rating"
+							],
+							"query": [
+								{
+									"key": "minRating",
+									"value": "4.0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Login Admin",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"john@example.com\",\r\n    \"password\": \"password123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"rashmika22personal@gmail.com\",\r\n    \"password\": \"new1234\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"John Doe\",\r\n    \"email\": \"john@example.com\",\r\n    \"password\": \"password123\",\r\n    \"role\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "RegisterUser Copy",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lakhini Voshadee\",\r\n    \"email\": \"lakhinivoshadee24@gmail.com\",\r\n    \"password\": \"password123\",\r\n    \"role\": \"user\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "LogOutUser",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4N2NjYTRkMDE3M2M3NWI4N2YyMDVkZCIsInJvbGVWZXJpZnkiOiJ1c2VyIiwiaWF0IjoxNzUzMDA4NzI1LCJleHAiOjE3NTM2MTM1MjV9.hg9SY0NRquTfawKHTK8ejG_zncptngbk6Dlo1N1l2Ss\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/logout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetUserById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/auth/:id",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUserById",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"John Updated\",\r\n    \"email\": \"john.updated@example.com\",\r\n    \"password\": \"newpassword123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/auth/update/687e637a6cb59a036f49a125",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"update",
+								"687e637a6cb59a036f49a125"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/auth/delete/687cc648f43cd2a422fb41e1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"delete",
+								"687cc648f43cd2a422fb41e1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Borrow Books",
+			"item": [
+				{
+					"name": "Get Borrowing List",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODg1YWVlMTZlYTQ3NGMzNGM2NDE3NyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzUzNzc3MTIzLCJleHAiOjE3NTM3ODA3MjN9.bDUhCB4Fw6IBeV6doJEN0eYvTfZ9D1L2JLhLMcTLhEM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/borrowing-list",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"borrowing-list"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Book to Borrowing List",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODg1YWVlMTZlYTQ3NGMzNGM2NDE3NyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzUzNzc3MTIzLCJleHAiOjE3NTM3ODA3MjN9.bDUhCB4Fw6IBeV6doJEN0eYvTfZ9D1L2JLhLMcTLhEM",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"isbn\": \"978-0-7432-7356-5\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/borrowing-list/add",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"borrowing-list",
+								"add"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Borrow a Book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODg1YWVlMTZlYTQ3NGMzNGM2NDE3NyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzUzNzcwNTk4LCJleHAiOjE3NTM3NzQxOTh9.eXCvfCV5sjaCrp5zk2ThhxrpWbzgkmUElbCn399MbWY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"userId\": \"68885aee16ea474c34c64177\",\r\n  \"bookId\": \"68886aaeaa0aa1410832b7fc\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/transactions/borrow",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"transactions",
+								"borrow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Book from Borrowing List",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODc2YTY0YTcxNTE1NjYzYzcwZjMyZCIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzUzNzYzNDY2LCJleHAiOjE3NTM3NjcwNjZ9.fFyRMB9hnxwsWg5CoDmOPTLfTs9pEljWTFHS-pjdmME",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/borrowing-list/remove/978-0-7432-7356-5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"borrowing-list",
+								"remove",
+								"978-0-7432-7356-5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Return a Book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODg1YWVlMTZlYTQ3NGMzNGM2NDE3NyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzUzNzcwNTk4LCJleHAiOjE3NTM3NzQxOTh9.eXCvfCV5sjaCrp5zk2ThhxrpWbzgkmUElbCn399MbWY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"transactionId\": \"68886c09aa0aa1410832b80b\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/transactions/return",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"transactions",
+								"return"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ClearBorrowingList",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ODg1YWVlMTZlYTQ3NGMzNGM2NDE3NyIsInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzUzNzc3MTIzLCJleHAiOjE3NTM3ODA3MjN9.bDUhCB4Fw6IBeV6doJEN0eYvTfZ9D1L2JLhLMcTLhEM",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:3000/api/borrowing-list/clear",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"borrowing-list",
+								"clear"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

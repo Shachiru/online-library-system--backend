@@ -3,13 +3,12 @@ import {
     getBorrowingListByUserId,
     addBookToBorrowingList,
     removeBookFromBorrowingList,
-    validateBorrowingList, clearBorrowingListService,
+    validateBorrowingList,
+    clearBorrowingListService,
 } from "../services/borrowingList.service";
 import {BorrowingListDTO} from "../dto/borrowingList.dto";
 import {Types} from "mongoose";
 import Book from "../model/book.model";
-import {sendEmail} from "../services/email.service";
-import User from "../model/user.model";
 
 type AuthRequest = Request & { user?: { id: string; role: string } };
 
@@ -73,14 +72,6 @@ export const addToBorrowingList = async (req: AuthRequest, res: Response) => {
         if (!list) {
             console.log(`Failed to add book ${isbn} to borrowing list for userId: ${userId}`);
             return res.status(404).json({message: "Book or borrowing list not found"});
-        }
-        const user = await User.findById(userId);
-        if (user) {
-            await sendEmail(
-                user.email,
-                "Book Added to Your Borrowing List",
-                `Hi ${user.name},\n\nYou’ve added "${book.title}" by ${book.author} to your borrowing list. Enjoy your reading!\n\nBest,\nThe Library Team`
-            );
         }
         res.status(200).json(list);
     } catch (error) {

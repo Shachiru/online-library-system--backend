@@ -23,13 +23,13 @@ export const loginUser = async (email: string, password: string): Promise<{ user
     await User.findOneAndUpdate({ email }, { lastLoginAt: new Date() });
 
     const accessToken = jwt.sign(
-        { id: user._id, role: user.role },
+        { id: user._id, name: user.name, role: user.role },
         process.env.JWT_SECRET as string,
         { expiresIn: "1h" }
     );
 
     const refreshToken = jwt.sign(
-        { id: user._id, role: user.role },
+        { id: user._id, name: user.name, role: user.role },
         process.env.REFRESH_TOKEN_SECRET as string,
         { expiresIn: "7d" }
     );

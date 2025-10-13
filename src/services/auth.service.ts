@@ -86,9 +86,34 @@ export const deleteUser = async (id: string): Promise<boolean> => {
 };
 
 export const validateUser = (user: UserDTO): string | null => {
-    if (!user.name || !user.email || !user.password) {
-        return "All required fields must be provided";
+    console.log('Validating user registration data:', JSON.stringify(user, null, 2));
+
+    if (!user) {
+        return "No user data provided";
     }
+
+    if (!user.name) {
+        return "Name is required";
+    }
+
+    if (!user.email) {
+        return "Email is required";
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(user.email)) {
+        return "Invalid email format";
+    }
+
+    if (!user.password) {
+        return "Password is required";
+    }
+
+    if (user.password.length < 6) {
+        return "Password must be at least 6 characters long";
+    }
+
     return null;
 };
 

@@ -34,7 +34,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use("/api/auth", authRoutes);
-app.use("/api/books", authenticateToken, bookRoutes);
+
+// Apply book routes without authentication middleware to make them publicly accessible
+app.use("/api/books", bookRoutes);
+
 app.use("/api/borrowing-list", authenticateToken, borrowingBookRoutes);
 app.use("/api/transactions", authenticateToken, transactionRoutes);
 
